@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors/business-errors';
+import { BusinessError, BusinessLogicException } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { AeropuertoEntity } from './aeropuerto.entity';
 
@@ -17,7 +17,7 @@ export class AeropuertoService {
     }
 
     async findOne(id: string): Promise<AeropuertoEntity> {
-        const aeropuerto: AeropuertoEntity = await this.aeropuertoRepository.findOne({where: {id}, relations: ["artworks", "exhibitions"] } );
+        const aeropuerto: AeropuertoEntity = await this.aeropuertoRepository.findOne({where: {id}, relations: ["aerolinea"] } );
         if (!aeropuerto)
           throw new BusinessLogicException("The aeropuerto with the given id was not found", BusinessError.NOT_FOUND);
     

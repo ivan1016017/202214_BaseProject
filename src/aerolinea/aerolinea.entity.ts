@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { AeropuertoEntity } from "src/aeropuerto/aeropuerto.entity";
+import { AeropuertoEntity } from "../aeropuerto/aeropuerto.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
