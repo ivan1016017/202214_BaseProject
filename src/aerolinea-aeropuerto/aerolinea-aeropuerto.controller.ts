@@ -1,5 +1,9 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
+import { AeropuertoDto } from 'src/aeropuerto/aeropuerto.dto';
+import { AeropuertoEntity } from 'src/aeropuerto/aeropuerto.entity';
+import { AerolineaDto } from '../aerolinea/aerolinea.dto';
+import { AerolineaEntity } from '../aerolinea/aerolinea.entity';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { AerolineaAeropuertoService } from './aerolinea-aeropuerto.service';
 
@@ -22,6 +26,12 @@ export class AerolineaAeropuertoController {
     @Get(':aerolineaId/airports')
     async findAirportsFromAirline(@Param('aerolineaId') aerolineaId: string){
         return await this.aerolineaAeropuertoService.findAirportsFromAirline(aerolineaId);
+    }
+
+    @Put(':aerolineaId/airports/:aeropuertoId')
+    async updateAirportFromAirline(@Param('aerolineaId') aerolineaId: string,@Param('aeropuertoId') aeropuertoId: string, @Body() aeropuertoDto: AeropuertoDto) {
+      const aeropuerto: AeropuertoEntity= plainToInstance(AeropuertoEntity, aeropuertoDto);
+      return await this.aerolineaAeropuertoService.updateAirportFromAirline(aerolineaId, aeropuertoId, aeropuerto);
     }
 
     
