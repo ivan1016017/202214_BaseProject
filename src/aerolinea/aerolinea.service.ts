@@ -17,11 +17,15 @@ export class AerolineaService {
     }
 
     async findOne(id: string): Promise<AerolineaEntity> {
+        try {
         const aerolinea: AerolineaEntity = await this.aerolineaRepository.findOne({where: {id}, relations: ["aeropuertos"] } );
         if (!aerolinea)
           throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
     
         return aerolinea;
+        } catch (error) {
+          throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
+        }
     }
     
     async create(aerolinea: AerolineaEntity): Promise<AerolineaEntity> {
@@ -29,18 +33,26 @@ export class AerolineaService {
     }
 
     async update(id: string, aerolinea: AerolineaEntity): Promise<AerolineaEntity> {
+        try {
         const persistedAerolinea: AerolineaEntity = await this.aerolineaRepository.findOne({where:{id}});
         if (!persistedAerolinea)
           throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
      
         return await this.aerolineaRepository.save({...persistedAerolinea, ...aerolinea});
+        } catch (error) {
+          throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
+        }
     }
 
     async delete(id: string) {
+        try {
         const aerolinea: AerolineaEntity = await this.aerolineaRepository.findOne({where:{id}});
         if (!aerolinea)
           throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
       
         await this.aerolineaRepository.remove(aerolinea);
+        } catch (error)  {
+          throw new BusinessLogicException("The aerolinea with the given id was not found", BusinessError.NOT_FOUND);
+        }
     }
 }
